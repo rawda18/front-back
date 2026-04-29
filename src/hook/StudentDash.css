@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #020817;
+    --card: #f0f2f4;
+    --card-foreground: #0f172a;
+    --primary: #1d4ed8;
+    --primary-foreground: #ffffff;
+    --accent: #ec4899;
+    --muted: #e2e8f0;
+    --border: #1e3a8a;
+    --primary-gradient: #6366f133;
+    --secondary-gradient: #ad46ff33;
+    --gradient-start: #ffffff;
+    --gradient-mid: #f8fafc;
+    --gradient-end: #f1f5f9;
+    --text-small: #64748b;
+    --text-titles: #0f172a;
+    --card-border: #E2E8F0;
+    --icon-bg: rgba(99, 102, 241, 0.1);
+    --btn-get-started: #6366f1;
+    --btn-signin-bg: #f8fafc;
+    --btn-register: #6366f1;
+    --btn-signin-text: #000000;
+    --bg-ready-section: linear-gradient(
+      90deg,
+      rgba(99, 102, 241, 0.1) 0%,
+      rgba(173, 70, 255, 0.1) 100%
+    );
+    --app-bg: linear-gradient(135deg, rgba(15, 15, 16, 0.1) 0%, #ffffff 50%, #ffffff 100%);
+    --main-text: #1f2937;
+    --chevron: #64748b;
+    --butt-filter: #eeeff0;
+    --bk: #f5eac9;
+    --br: #e2e8f0;
+    --caIn:#F8FAFC;
+  }
+
+  .dark {
+    --background: #020817;
+    --foreground: #f8fafc;
+    --card: #0f172a;
+    --card-foreground: #f1f5f9;
+    --primary: #1e40af;
+    --primary-foreground: #ffffff;
+    --accent: #f472b6;
+    --muted: #3d434d;
+    --border: #1e293b;
+    --primary-gradient: #1e40af33;
+    --secondary-gradient: #ad46ff33;
+    --gradient-start: #020817;
+    --gradient-mid: #0a1128;
+    --gradient-end: #020817;
+    --text-small: #94a3b8;
+    --text-titles: #e8eaf0;
+    --card-border: #2B4C9F;
+    --icon-bg: rgba(30, 64, 175, 0.2);
+    --btn-get-started: linear-gradient(90deg, #1e40af 0%, #1e3a8a 50%, #172554 100%);
+    --btn-signin-bg: #0a1128;
+    --btn-register: #1e40af;
+    --btn-signin-text: #ffffff;
+    --bg-ready-section: linear-gradient(
+      90deg,
+      rgba(99, 102, 241, 0.2) 0%,
+      rgba(173, 70, 255, 0.2) 100%
+    );
+    --app-bg: linear-gradient(
+      330deg,
+      rgba(19, 25, 46, 0.05) 20%,
+      rgba(28, 40, 76, 0.4) 50%,
+      #25396c 100%
+    );
+    --main-text: #f3f4f6;
+    --chevron: #94a3b8;
+    --butt-filter: #1e293b;
+    --bk: #3d351d;
+    --br: #1e293b;
+    --caIn:#121825;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+  }
+}
+
+@layer components {
+  .dynamic-bg {
+    background: linear-gradient(
+      135deg,
+      var(--gradient-start) 0%,
+      var(--gradient-mid) 50%,
+      var(--gradient-end) 100%
+    );
+    min-height: 100vh;
+    transition: background 0.3s ease;
+  }
+
+  .text-small-custom {
+    color: var(--text-small) !important;
+  }
+
+  .text-title-custom {
+    color: var(--text-titles) !important;
+  }
+
+  .card-custom {
+    border: 1px solid var(--card-border) !important;
+  }
+
+  .btn-get-started {
+    background: var(--btn-get-started) !important;
+    color: white !important;
+  }
+
+  .btn-signin {
+    background: var(--btn-signin-bg) !important;
+    border: 1px solid var(--card-border);
+    color: var(--btn-signin-text) !important;
+  }
+
+  .btn-register {
+    background-color: var(--btn-register) !important;
+    color: white !important;
+    transition: all 0.3s ease;
+  }
+
+  .btn-register:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .bg-ready-custom {
+    background: var(--bg-ready-section) !important;
+    border: 1px solid var(--card-border);
+  }
+
+  .glass-card {
+    background: var(--app-bg) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .border-1 {
+    border-width: 1px;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
