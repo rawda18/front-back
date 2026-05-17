@@ -1,0 +1,61 @@
+/* src/Pages/RequestWorkflow.css */
+.request-workflow-container {
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --text-titles: #0f172a;
+  --text-small: #64748b;
+  --background: #f8fafc;
+}
+
+.request-workflow-container.dark {
+  --card: #0a1128;
+  --card-border: #1e293b;
+  --text-titles: #e8eaf0;
+  --text-small: #94a3b8;
+  --background: #020817;
+}
+
+.dynamic-bg {
+  background: var(--background);
+  min-height: 100vh;
+}
+
+.text-title-custom {
+  color: var(--text-titles) !important;
+}
+
+.text-small-custom {
+  color: var(--text-small) !important;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+}
+
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.2);
+}
+.request-workflow-container {
+  --pending-color: #fdc700;
+  --approved-color: #51a2ff;
+  --completed-color: #05df72;
+  --inuse-color: #7c86ff;
+  --ready-color: #00d3f3;
+}
+
+.badge-pending {
+  background-color: rgba(253, 199, 0, 0.1);
+  color: #fdc700;
+  border-color: rgba(253, 199, 0, 0.3);
+}
+.badge-approved {
+  background-color: rgba(81, 162, 255, 0.1);
+  color: #51a2ff;
+  border-color: rgba(81, 162, 255, 0.3);
+}
+.badge-completed {
+  background-color: rgba(5, 223, 114, 0.1);
+  color: #05df72;
+  border-color: rgba(5, 223, 114, 0.3);
+}
