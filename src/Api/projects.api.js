@@ -1,7 +1,7 @@
 // src/Api/projects.api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8006/api';
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export const fetchProjects = async () => {
   try {

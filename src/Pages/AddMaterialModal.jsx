@@ -1,5 +1,19 @@
 import { useState } from "react";
 import { QrCode } from "lucide-react";
+/*
+
+{
+    "name": "test v2",
+    "category": "test v2",
+    "description": "test v2",
+    "quantity": 1,
+    "location": "test v2",
+    "laboratory": null,
+    "status": "out_of_stock",
+    "unit": "piece",
+    "min_stock": 0
+}
+*/
 
 export default function AddMaterialModal({ onClose, onAdd }) {
   const [form, setForm] = useState({
@@ -8,7 +22,7 @@ export default function AddMaterialModal({ onClose, onAdd }) {
 
   const handleSubmit = () => {
     if (!form.name || !form.category) return;
-    onAdd({ ...form, id: Date.now(), status: "Available" });
+    onAdd(form);
     onClose();
   };
 

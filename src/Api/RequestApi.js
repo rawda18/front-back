@@ -1,7 +1,7 @@
 // src/Api/RequestApijs
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8006/api';
+const API_BASE_URL = 'http://localhost:8000/api';
 export const getRequests = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/requests/`);
