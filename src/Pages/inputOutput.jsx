@@ -138,7 +138,8 @@ export default function InputOutput() {
           <ThemeToggel />
         </div>
 
-        <div className="w-full mt-[45px] border-t border-solid border-[var(--card-border)]"></div>
+        <div className="w-full mt-[45px] border-t border-solid border-[var(--btali)]"></div>
+
         <div className="w-full mb-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-3">
             <div className="whitespace-nowrap">
@@ -162,7 +163,7 @@ export default function InputOutput() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl p-3 glass-card border-1 border-[#1E40AF4D] min-h-[90px]"
+                className="rounded-2xl p-3 glass-card border-1 border-[var(--btali)] min-h-[90px]"
               >
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-xs text-small-custom whitespace-nowrap">{s.label}</p>
@@ -181,7 +182,8 @@ export default function InputOutput() {
           </div>
 
           {/* Filters - nafsou */}
-          <div className="rounded-xl border-1 border-[#1E40AF4D] bg-[var(--card)] p-4 mb-4">
+
+          <div className="rounded-xl border-1 border-[var(--btali)] bg-[var(--caIn)] p-4 mb-4">
             <div className="flex items-center gap-2 mb-3">
               <Filter size={16} className="text-small-custom mt-[-5px]" />
               <h2 className="text-xl whitespace-nowrap text-title-custom">Filters</h2>
@@ -191,7 +193,7 @@ export default function InputOutput() {
                 <div key={d.key} className="relative">
                   <label className="block text-xs text-small-custom mb-1">{d.label}</label>
                   <div
-                    className="flex items-center justify-between px-3 py-2 rounded-lg border-0 border-[#1E40AF4D] bg-[var(--butt-filter)] text-sm cursor-pointer"
+                    className="flex items-center justify-between px-3 py-2 rounded-lg border-0 border-[var(--btali)] bg-[var(--butt-filter)] text-sm cursor-pointer"
                     onClick={() => setOpenDropdown(openDropdown === d.key ? null : d.key)}
                   >
                     <span className="text-small-custom">{d.value || ''}</span>
@@ -201,7 +203,7 @@ export default function InputOutput() {
                     />
                   </div>
                   {openDropdown === d.key && (
-                    <div className="absolute z-50 mt-1 w-full rounded-lg border border-[#1E40AF4D] bg-[var(--card)] shadow-xl overflow-hidden">
+                    <div className="absolute z-50 mt-1 w-full rounded-lg border border-[var(--btali)] bg-[var(--card)] shadow-xl overflow-hidden">
                       <div
                         className="px-3 py-2 text-xs text-small-custom hover:bg-gray-100 cursor-pointer"
                         onClick={() => {
@@ -245,11 +247,12 @@ export default function InputOutput() {
           </div>
 
           {/* Table - outputs state (n'est plus filtered) */}
-          <div className="rounded-xl border-1 border-[#1E40AF4D] overflow-hidden">
+
+          <div className="rounded-xl border-1 border-[var(--btali)] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[700px]">
                 <thead>
-                  <tr className="border-b border-[#1E40AF4D] text-[14px] bg-[var(--butt-filter)]">
+                  <tr className="border-b border-[var(--btali)] text-[14px] bg-[var(--butt-filter)]">
                     {[
                       'Material',
                       'Laboratory',
@@ -284,7 +287,7 @@ export default function InputOutput() {
                     outputs.map((row, i) => (
                       <tr
                         key={i}
-                        className="border-b border-[#1E40AF4D] last:border-0 bg-[var(--card)]"
+                        className="border-b border-[var(--btali)] last:border-0 bg-[var(--caIn)]"
                       >
                         <td className="px-4 py-3">
                           <div className="font-medium text-title-custom">{row.material}</div>

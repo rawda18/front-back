@@ -62,7 +62,26 @@ function App() {
                 <Route path="/material-outputs" element={<InputOutput />} />
 
                 {/* STOREKEEPER ROUTES */}
-                <Route path="/dashboard/storekeeper" element={<StorekeeperDashboard />} />
+
+                <Route
+                  path="/dashboard/storekeeper"
+                  element={
+                    <StorekeeperDashboard
+                      onAddMaintenance={(form) =>
+                        setMaintenanceList((prev) => [
+                          ...prev,
+                          {
+                            ...form,
+                            id: Date.now(),
+                            date: new Date().toLocaleDateString('fr-FR'),
+                            status: 'Pending',
+                          },
+                        ])
+                      }
+                    />
+                  }
+                />
+
                 <Route path="/maintenance" element={<Maintenance />} />
 
                 {/* STUDENT ROUTES */}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // ✅ غيرنا الرابط من 8000 إلى 8002
-const API_URL = 'http://localhost:8002/api';
+const API_URL = '	http://localhost:8000/api/inventory/dashboard/stats/';
 
 export const getDashboardStats = async () => {
   try {

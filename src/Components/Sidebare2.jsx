@@ -19,7 +19,7 @@ const NavButton = ({ label, icon: Icon, active, onClick }) => (
     onClick={onClick}
     className={`w-full flex items-center gap-3 px-5 py-[12px] rounded-[12px] transition-all duration-300 ${
       active
-        ? 'bg-[#2B4C9F] text-white shadow-lg font-bold'
+        ? 'bg-[#6366F1] text-white shadow-lg font-bold'
         : 'text-[var(--title-custom)] hover:bg-[var(--hover-bg)] hover:text-[var(--title-custom)] font-[var(--font-family)]' // هادي ترجعو خفيف ها
     }`}
   >
@@ -44,13 +44,14 @@ export default function Sidebare2({ activeLabel }) {
 
   return (
     <aside
-      className="md:w-64 hidden md:flex md:w-64 flex-col border-r border-[var(--card-border)] bg-[var(--background)] transition-all "
+      className="md:w-64 hidden md:flex md:w-64 flex-col border-r border-[var(--btali)] bg-[var(--caIn)] transition-all "
       style={{
         fontFamily: 'Inter',
       }}
     >
       {/* Header / Logo */}
-      <div className="h-[100px] px-6 flex items-center border-b border-[var(--card-border)]">
+
+      <div className="h-[100px] px-6 flex items-center border-b border-[var(--btali)]">
         <div className="flex items-center gap-4">
           <div className="flex-shrink-0 w-[48px] h-[48px]">
             <img
@@ -80,7 +81,8 @@ export default function Sidebare2({ activeLabel }) {
       </nav>
 
       {/* User Info & Logout */}
-      <div className="p-6 border-t border-[var(--card-border)] ">
+
+      <div className="p-6 border-t border-[var(--btali)] ">
         <div className="mb-6 ml-2">
           <div className="text-xs font-bold text-title-custom">Robotics Lab Admin</div>
           <div className="text-[10px] text-small-custom ">Admin</div>
@@ -98,7 +100,9 @@ export default function Sidebare2({ activeLabel }) {
           <span className="text-sm font-medium ">Logout</span>
         </button>
       </div>
-      <div className="border-t border-[var(--card-border)]"></div>
+
+      <div className="border-t border-[var(--btali)]"></div>
+
       {/* Close/Footer Button */}
       <div className="h-16 flex items-center justify-center border-t border-gray-50 dark:border-[#1E293B]">
         <button

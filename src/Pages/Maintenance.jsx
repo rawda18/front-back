@@ -24,7 +24,6 @@ export default function Maintenance() {
   ]);
   const [loading, setLoading] = useState(true);
 
-  // دالة تحميل البيانات من الـ API الحقيقي
   const loadData = async () => {
     setLoading(true);
     try {
@@ -63,7 +62,8 @@ export default function Maintenance() {
           <ThemeToggel />
         </div>
 
-        <div className="w-full mt-[45px] border-t border-solid border-[var(--card-border)]"></div>
+        <div className="w-full mt-[45px] border-t border-solid border-[var(--btali)]"></div>
+
         <div className="w-full mb-5">
           <div className="flex items-center justify-between w-full">
             <div className="whitespace-nowrap">
@@ -95,8 +95,9 @@ export default function Maintenance() {
           </div>
 
           {/* Maintenance History */}
-          <div className="rounded-xl border-1 border-[var(--br)] bg-[var(--card)]">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#1E40AF4D]">
+
+          <div className="rounded-xl border-1 border-[var(--btali)] bg-[var(--caIn)]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--btali)]">
               <div className="flex items-center gap-2">
                 <Wrench size={18} className="text-title-custom" />
                 <h3 className="text-base font-semibold text-title-custom">Maintenance History</h3>

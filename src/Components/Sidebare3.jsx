@@ -19,7 +19,7 @@ const NavButton = ({ label, icon: Icon, active, onClick }) => (
     onClick={onClick}
     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
       active
-        ? 'bg-[#2B4C9F] text-white shadow-md' // نف
+        ? 'bg-[#6366F1] text-white shadow-md'
         : 'text-[var(--title-custom)] hover:bg-[var(--hover-bg)] hover:text-[var(--title-custom)] font-[var(--font-family)]'
     }`}
   >
@@ -61,13 +61,16 @@ export default function Sidebare3({ activeLabel }) {
       <aside
         className={`
           fixed inset-y-0 left-0 z-[70] w-64 flex flex-col h-screen transition-transform duration-300 ease-in-out
-          bg-[var(--background)] border-r border-[var(--card-border)]
+
+          bg-[var(--caIn)] border-r border-[var(--btali)]
+
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 md:sticky md:top-0 md:flex
         `}
       >
         {/* Logo Section */}
-        <div className="flex items-center justify-between h-[97px] px-6 border-b border-[var(--card-border)]">
+
+        <div className="flex items-center justify-between h-[97px] px-6 border-b border-[var(--btali)]">
           <div className="flex items-center gap-3">
             <img
               src={logo}
@@ -89,7 +92,8 @@ export default function Sidebare3({ activeLabel }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto mt-2">
+
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto mt-2">
           {navItems.map((item) => (
             <NavButton
               key={item.label}
@@ -105,11 +109,9 @@ export default function Sidebare3({ activeLabel }) {
         </nav>
 
         {/* User & Logout - هبطناهم بـ mt-auto */}
-        <div className="mt-auto border-t border-[var(--card-border)] p-5 bg-[var(--background)]/50">
+
+        <div className="mt-auto border-t border-[var(--btali)] p-5 bg-[var(--background)]/50">
           <div className="flex items-center gap-3 mb-5 px-1">
-            <div className="w-9 h-9 rounded-full bg-[#2B4C9F] flex items-center justify-center text-white font-bold text-xs shadow-sm">
-              <Users size={18} />
-            </div>
             <div className="flex flex-col">
               <span className="text-sm font-bold text-[var(--title-custom)]">Storekeeper</span>
               <span className="text-[10px] text-[var(--small-custom)] uppercase tracking-wider font-bold">
@@ -133,7 +135,7 @@ export default function Sidebare3({ activeLabel }) {
         {/* Close button السفلي */}
         <button
           onClick={() => navigate('/dashboard/storekeeper')}
-          className="flex justify-center items-center w-full h-[55px] border-t border-[var(--card-border)] hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
+          className="flex justify-center items-center w-full h-[55px] border-t border-[var(--btali)] hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
         >
           <X size={20} className="text-[var(--small-custom)]" />
         </button>

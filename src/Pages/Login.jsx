@@ -70,8 +70,9 @@ export default function Login() {
       </div>
 
       <div className="login-content">
-        <div className="login-brand">
-          <img src={logo} alt="ESI-GM" className="login-brand-logo" />
+        <div className="login-brand text-center">
+          <img src={logo} alt="ESI-GM" className="mx-auto mb-4 h-[80px] w-[80px]" />
+
           <h2 className="login-brand-name">ESI-GM</h2>
           <p className="login-brand-school">École Supérieure d'Informatique Sidi Bel Abbès</p>
           <p className="login-brand-date">8 Mai 1945</p>
