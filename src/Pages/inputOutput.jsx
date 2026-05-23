@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Filter, Search, ChevronDown, Download, Package } from 'lucide-react';
 import ThemeToggel from '../components/ThemToggel';
+import Sidebare3 from '../components/Sidebare3';
 import Sidebare2 from '../components/Sidebare2';
 import { fetchOutputs, fetchStats } from '../Api/inputOutput.api.js';
 import { Icon } from '../components/Icon';
@@ -129,10 +130,20 @@ export default function InputOutput() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
+  const [userRole, setUserRole] = useState('');
 
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
+    setUserRole(role);
+  }, []);
   return (
     <div className="flex dynamic-bg transition-colors duration-300" style={{ fontFamily: 'Inter' }}>
-      <Sidebare2 activeLabel="Material Outputs" />
+      {userRole?.toLowerCase() === 'storekeeper' ? (
+        <Sidebare3 activeLabel="Material Outputs" />
+      ) : (
+        <Sidebare2 activeLabel="Material Outputs" />
+      )}
+
       <main className="flex-1 relative overflow-y-auto p-4 sm:p-6 lg:p-8">
         <div className="absolute top-6 right-8 z-60">
           <ThemeToggel />

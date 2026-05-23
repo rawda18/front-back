@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SlideBare from '../Components/SlideBare';
+import Sidebare2 from '../Components/Sidebare2';
 import ThemeToggle from '../Components/ThemeToggle';
 import { Icon } from '../Components/Icon';
 import axios from 'axios';
@@ -303,7 +303,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="dashboard-layout">
-        <SlideBare activeLabel="Dashboard" />
+        <Sidebare2 activeLabel="Dashboard" />
         <main className="main-content">
           <div className="topbar">
             <div>
@@ -320,7 +320,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="dashboard-layout">
-      <SlideBare activeLabel="Dashboard" />
+      <Sidebare2 activeLabel="Dashboard" />
       <main className="main-content">
         <div className="topbar">
           <div>

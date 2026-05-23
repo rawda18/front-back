@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Sidebare from '../components/Sidebare';
 import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -60,98 +61,6 @@ const MobItem = ({ label, icon: Icon, active, onClick }) => (
   </button>
 );
 
-// ── Sidebar ───────────────────────────────────────────────────
-const Sidebar = ({ activeLabel }) => {
-  const navigate = useNavigate();
-
-  const navItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard/student' },
-    { label: 'My Projects', icon: FolderKanban, path: '/projects' },
-    { label: 'My Requests', icon: ClipboardList, path: '/my-requests' },
-    { label: 'Browse Materials', icon: Package, path: '/materials/browse' },
-  ];
-
-  return (
-    <>
-      {/* Desktop Sidebar */}
-      <aside
-        className="hidden md:flex w-[260px] h-screen sticky top-0 flex-col border-r border-[var(--card-border)] bg-[var(--background)] transition-all"
-        style={{ fontFamily: 'Inter' }}
-      >
-        <div className="h-[100px] px-6 flex items-center border-b border-[var(--card-border)]">
-          <div className="flex items-center gap-4">
-            <div className="flex-shrink-0 w-[48px] h-[48px]">
-              <img src="/logo.png" alt="logo" className="w-full h-full rounded-full object-cover" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[var(--title-custom)] text-[18px] font-semibold">ESI-GM</span>
-              <span className="text-[12px] text-[var(--small-custom)] mt-1">ESI 8 Mai 1945</span>
-            </div>
-          </div>
-        </div>
-
-        <nav className="flex flex-col p-3 gap-[7px] flex-1">
-          {navItems.map((item) => (
-            <NavItem
-              key={item.label}
-              label={item.label}
-              icon={item.icon}
-              active={activeLabel === item.label}
-              onClick={() => navigate(item.path)}
-            />
-          ))}
-        </nav>
-
-        <div className="flex flex-col items-start w-full pt-4 px-4 gap-3 border-t border-[var(--card-border)]">
-          <div className="flex gap-3 mb-1 ml-1">
-            <div className="flex flex-col px-3">
-              <div className="text-sm font-bold text-[var(--title-custom)]">Sarah Student</div>
-              <div className="text-xs text-[var(--small-custom)]">Student</div>
-            </div>
-          </div>
-          <div className="flex justify-center items-center gap-16 self-stretch mb-3">
-            <ThemeToggel />
-            <button
-              onClick={() => {
-                localStorage.clear();
-                navigate('/login');
-              }}
-              className="flex items-center bg-transparent gap-2 text-[var(--small-custom)] hover:text-red-500 transition-colors"
-            >
-              <LogOut size={18} /> Logout
-            </button>
-          </div>
-        </div>
-
-        <div className="h-16 flex items-center justify-center border-t border-[var(--card-border)]">
-          <button
-            onClick={() => navigate('/StudentDashboard')}
-            className="text-[var(--small-custom)] hover:text-[var(--title-custom)] transition-all hover:scale-110"
-          >
-            <X size={23} strokeWidth={2.5} />
-          </button>
-        </div>
-      </aside>
-
-      {/* Mobile Bottom Nav */}
-      <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around bg-[var(--background)] border-t border-[var(--card-border)] h-16 px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
-        style={{ fontFamily: 'Inter' }}
-      >
-        {navItems.map((item) => (
-          <MobItem
-            key={item.label}
-            label={item.label}
-            icon={item.icon}
-            active={activeLabel === item.label}
-            onClick={() => navigate(item.path)}
-          />
-        ))}
-      </nav>
-    </>
-  );
-};
-
 // ── StudentDashboard ──────────────────────────────────────────
 export default function StudentDashboard() {
   const navigate = useNavigate();
@@ -207,7 +116,7 @@ export default function StudentDashboard() {
       className="flex h-screen dynamic-bg transition-colors duration-300"
       style={{ fontFamily: 'Inter' }}
     >
-      <Sidebar activeLabel="Dashboard" />
+      <Sidebare activeLabel="Dashboard" />
 
       <main className="flex-1 overflow-y-auto p-7 pb-20 md:pb-7">
         <div className="max-w-5xl mx-auto">
@@ -339,7 +248,7 @@ export default function StudentDashboard() {
                   <div className="min-w-0">
                     <p className="text-sm text-title-custom truncate">{r.project}</p>
                     <p className="text-xs text-small-custom mt-1">
-                      {r.items} item(s) • Updated: {r.updatedAt}
+                      {r.items?.length || 0} item(s) • Updated: {r.updatedAt}
                     </p>
                   </div>
                   <span

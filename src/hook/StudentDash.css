@@ -22,7 +22,7 @@
     --gradient-end: #f1f5f9;
     --text-small: #64748b;
     --text-titles: #0f172a;
-    --card-border: #E2E8F0;
+    --card-border: #e2e8f0;
     --icon-bg: rgba(99, 102, 241, 0.1);
     --btn-get-started: #6366f1;
     --btn-signin-bg: #f8fafc;
@@ -39,8 +39,9 @@
     --butt-filter: #eeeff0;
     --bk: #f5eac9;
     --br: #e2e8f0;
-    --caIn:#F8FAFC;
-    --btali:#E2E8F0;
+    --caIn: #f8fafc;
+
+    --btali: #e2e8f0;
   }
 
   .dark {
@@ -60,7 +61,7 @@
     --gradient-end: #020817;
     --text-small: #94a3b8;
     --text-titles: #e8eaf0;
-    --card-border: #2B4C9F;
+    --card-border: #2b4c9f;
     --icon-bg: rgba(30, 64, 175, 0.2);
     --btn-get-started: linear-gradient(90deg, #1e40af 0%, #1e3a8a 50%, #172554 100%);
     --btn-signin-bg: #0a1128;
@@ -82,8 +83,9 @@
     --butt-filter: #1e293b;
     --bk: #3d351d;
     --br: #1e293b;
-    --caIn:#121825;
-    --btali:#1E293B;
+    --caIn: #121825;
+
+    --btali: #1e293b;
   }
 }
 

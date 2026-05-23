@@ -1,55 +1,62 @@
 import axios from 'axios';
 
-// ✅ تأكدي من الرابط
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'http://localhost:8001';
 
+// ✅ دالة لجلب الـ Token من localStorage
+const getToken = () => {
+  return localStorage.getItem('access_token');
+};
+
+// ✅ دالة لجلب الطلبات
 export const getMyRequests = async () => {
   try {
-    const url = `${API_BASE_URL}/requests/`;
-    console.log('🔍 Fetching from:', url);
-
-    const response = await axios.get(url);
-
-    console.log('✅ Response received:', response.data);
-
-    // الـ Response فيه results
-    return response.data.results;
-  } catch (error) {
-    console.error('❌ Error details:', {
-      message: error.message,
-      url: error.config?.url,
-      status: error.response?.status,
-      data: error.response?.data,
+    const token = getToken();
+    const response = await axios.get(`${API_BASE_URL}/my-request/requests/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    return response.data.results || response.data;
+  } catch (error) {
+    console.error('Error:', error);
     return [];
   }
 };
 
+// ✅ دالة لإضافة طلب جديد
 export const submitNewRequest = async (requestData) => {
   try {
-    // ✅ تعديل شكل البيانات ليتناسب مع الـ Backend
+    const token = getToken();
+
     const formattedData = {
-      project: { id: requestData.projectId || 1 }, // project object
-      purpose: requestData.purpose,
-      start_date: requestData.startDate, // ✅ start_date (موش startDate)
-      end_date: requestData.endDate, // ✅ end_date (موش endDate)
+      project: {
+        name: requestData.projectName || 'Default Project',
+        description: requestData.purpose || '',
+      },
+      purpose: requestData.purpose || '',
+      start_date: requestData.startDate,
+      end_date: requestData.endDate,
       items: requestData.items.map((item) => ({
-        material: { id: item.materialId || 1 }, // material object
+        material_name: item.name,
         quantity: item.qty,
       })),
     };
 
-    const response = await axios.post(`${API_BASE_URL}/requests/`, formattedData);
+    const response = await axios.post(`${API_BASE_URL}/my-request/requests/`, formattedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
     return response.data;
   } catch (error) {
+    console.error('❌ Submit error:', error.response?.data);
     throw error.response?.data?.message || 'Failed to submit request';
   }
 };
 
 export const validateStock = async (items) => {
-  console.log('🔍 Validating items (mock):', items);
-
-  // ✅ مؤقتاً للاختبار (يرجع valid=true)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({

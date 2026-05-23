@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Sidebare3 from '../components/Sidebare3';
+import Sidebare2 from '../components/Sidebare2';
 import {
   LayoutDashboard,
   Box,
@@ -128,7 +130,12 @@ const LaboratoryInventory = () => {
     loadAllData();
   }, []);
   const toggleTheme = () => setDark(!dark);
+  const [userRole, setUserRole] = useState('');
 
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
+    setUserRole(role);
+  }, []);
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
       const matchSearch =
@@ -149,114 +156,11 @@ const LaboratoryInventory = () => {
         dark ? 'bg-[#0A0E1A] text-[#FFF]' : 'bg-[#FFF] text-[#0A0E1A]'
       }`}
     >
-      <aside
-        className={`hidden md:flex md:w-64 flex-col border-r ${
-          dark ? 'bg-[#020817] border-[#2B4C9F]' : 'bg-[#FFF] border-[#E2E8F0]'
-        }`}
-      >
-        <div
-          className={`flex items-center h-[97px] px-6 border-b ${
-            dark ? 'border-[#2B4C9F]' : 'border-[#E2E8F0]'
-          }`}
-        >
-          <div className="flex-shrink-0 w-[48px] h-[48px]">
-            <img
-              src={logo}
-              alt="Logo"
-              className="w-full h-full rounded-full bg-lightgray bg-center bg-cover bg-no-repeat"
-            />
-          </div>
-          <div className="ml-4">
-            <h1 className={`text-base font-bold ${dark ? 'text-[#E8EAF0]' : 'text-[#0F172A]'}`}>
-              ESI-GM
-            </h1>
-            <p className={`text-[10px] ${dark ? 'text-[#94A3B8]' : 'text-[#64748B]'}`}>
-              Lab Equipment
-            </p>
-          </div>
-        </div>
-
-        <nav className="p-4 flex-1 space-y-2">
-          <NavItem
-            icon={LayoutDashboard}
-            label="Dashboard"
-            onClick={() => {
-              const role = localStorage.getItem('role');
-              if (role === 'student') {
-                navigate('/dashboard/admin');
-              } else if (role === 'storekeeper') {
-                navigate('/dashboard/storekeeper');
-              } else if (role === 'super_admin') {
-                navigate('/dashboard/superadmin');
-              } else {
-                navigate('/dashboard/admin');
-              }
-            }}
-          />
-          <NavItem
-            icon={Box}
-            label="Inventory"
-            active
-            dark={dark}
-            onClick={() => navigate('/inventory')}
-          />
-          <NavItem
-            icon={QrCode}
-            label="QR Scanner"
-            dark={dark}
-            onClick={() => navigate('/qr-scanner')}
-          />
-          <NavItem icon={Users} label="Users" dark={dark} onClick={() => navigate('/users')} />
-          <NavItem
-            icon={ClipboardList}
-            label="Requests"
-            dark={dark}
-            onClick={() => navigate('/requests')}
-          />
-          <NavItem
-            icon={ArrowUpRight}
-            label="Material Outputs"
-            dark={dark}
-            onClick={() => navigate('/material-outputs')}
-          />
-          <NavItem
-            icon={Settings}
-            label="Maintenance"
-            dark={dark}
-            onClick={() => navigate('/maintenance')}
-          />
-          <NavItem
-            icon={Settings}
-            label="Settings"
-            dark={dark}
-            onClick={() => navigate('/settings')}
-          />
-        </nav>
-
-        <div className={`p-6 border-t ${dark ? 'border-[#2B4C9F]' : 'border-[#E2E8F0]'}`}>
-          <p className="text-xs font-bold">Robotics Lab Admin</p>
-          <p className={`text-[10px] ${dark ? 'text-[#94A3B8]' : 'text-[#64748B]'}`}>Admin</p>
-          <button
-            onClick={() => {
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
-              navigate('/login');
-            }}
-            className="flex items-center bg-transparent gap-2 mt-4 hover:text-red-500 transition-colors"
-          >
-            <LogOut size={18} /> <span className="text-sm font-medium">Logout</span>
-          </button>
-        </div>
-
-        <button
-          onClick={() => navigate('/dashboard/admin')}
-          className={`flex flex-col items-start w-full sm:w-[255px] h-auto sm:h-[52px] pt-[16.667px] px-4 sm:px-[117.667px] ${
-            dark ? 'border-t border-[#2B4C9F]' : 'border-t border-[#E2E8F0]'
-          } bg-transparent rounded-none`}
-        >
-          <X className="w-[20px] h-[20px] flex-shrink-0" />
-        </button>
-      </aside>
+      {userRole?.toLowerCase() === 'storekeeper' ? (
+        <Sidebare3 activeLabel="Inventory" />
+      ) : (
+        <Sidebare2 activeLabel="Inventory" />
+      )}
 
       <main className="flex-1 p-8">
         <header className="flex justify-between items-start mb-8">

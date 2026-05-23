@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -33,6 +33,18 @@ const NavItem = ({ label, icon: IconComponent, active, onClick }) => (
 export default function Sidebar({ activeLabel }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  // ✅ State للاسم والرتبة
+  const [userName, setUserName] = useState('Student');
+  const [userRole, setUserRole] = useState('Student');
+
+  // ✅ جيب الاسم من localStorage عند تحميل الصفحة
+  useEffect(() => {
+    const name = localStorage.getItem('user_name') || localStorage.getItem('username') || 'Student';
+    const role = localStorage.getItem('user_role') || 'Student';
+    setUserName(name);
+    setUserRole(role);
+  }, []);
 
   const navItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard/student' },
@@ -71,7 +83,7 @@ export default function Sidebar({ activeLabel }) {
             active={activeLabel === item.label}
             onClick={() => {
               navigate(item.path);
-              setIsOpen(false); // غلق السايدبار بعد التنقل على الموبايل
+              setIsOpen(false);
             }}
           />
         ))}
@@ -81,10 +93,11 @@ export default function Sidebar({ activeLabel }) {
       <div className="flex flex-col items-start w-full sm:w-[255px] h-auto sm:h-[120px] pt-[16.667px] px-4 gap-3 flex-shrink-0 border-t border-[var(--card-border)]">
         <div className="flex gap-3 mb-1 ml-1">
           <div className="flex flex-col items-start h-[36px] px-3 flex-shrink-0 self-stretch">
+            {/* ✅ اسم المستخدم من localStorage */}
             <div className="text-sm font-bold text-[var(--title-custom)] leading-tight">
-              Sarah Student
+              {userName}
             </div>
-            <div className="text-xs text-small-custom">Student</div>
+            <div className="text-xs text-small-custom">{userRole}</div>
           </div>
         </div>
         <div className="flex justify-center items-start gap-8 sm:gap-16 self-stretch">

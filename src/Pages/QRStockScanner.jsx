@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import SlideBare from '../Components/SlideBare.jsx';
+import Sidebare3 from '../Components/Sidebare3.jsx';
+import Sidebare2 from '../components/Sidebare2';
 import ThemeToggle from '../Components/ThemeToggle.jsx';
 import { Html5Qrcode } from 'html5-qrcode';
 import {
@@ -11,7 +12,6 @@ import {
   History,
   X,
 } from 'lucide-react';
-import qrScannerAPI from '../Api/qrScanner.api.js';
 
 export default function QRStockScanner() {
   const scannerRef = useRef(null);
@@ -24,25 +24,6 @@ export default function QRStockScanner() {
   const [lastScannedCode, setLastScannedCode] = useState('');
   const [recentTransactions, setRecentTransactions] = useState([]);
 
-  // تحميل المعاملات السابقة عند تحميل الصفحة
-  useEffect(() => {
-    const loadData = async () => {
-      const result = await qrScannerAPI.getRecentTransactions(6);
-      if (result.success) {
-        const formattedTransactions = result.transactions.map(t => ({
-          id: t.id,
-          code: t.material_title || t.material,
-          type: t.transaction_type,
-          date: new Date(t.timestamp).toLocaleString(),
-          status: 'Success',
-        }));
-        setRecentTransactions(formattedTransactions);
-      }
-    };
-    loadData();
-  }, []);
-
-  // إيقاف الماسح الضوئي
   const stopScanner = async () => {
     try {
       if (scannerRef.current) {
@@ -57,40 +38,23 @@ export default function QRStockScanner() {
     }
   };
 
-  // معالجة نجاح المسح
   const handleScanSuccess = async (decodedText) => {
     setLastScannedCode(decodedText);
-    setScanMessage('Processing QR code...');
+    setScanMessage('QR code scanned successfully');
     setErrorMessage('');
 
-    // استدعاء الـ API الحقيقي
-    const result = await qrScannerAPI.processScan(
-      decodedText,
-      transactionType,
-      1
-    );
+    const newTransaction = {
+      id: Date.now(),
+      code: decodedText,
+      type: transactionType,
+      date: new Date().toLocaleString(),
+      status: 'Success',
+    };
 
-    if (result.success) {
-      setScanMessage(`✅ ${result.message}`);
-      
-      const newTransaction = {
-        id: result.transaction.id,
-        code: result.transaction.material_title || result.material?.title || decodedText,
-        type: transactionType,
-        date: new Date().toLocaleString(),
-        status: 'Success',
-      };
-
-      setRecentTransactions((prev) => [newTransaction, ...prev].slice(0, 6));
-    } else {
-      setErrorMessage(result.error);
-      setScanMessage('❌ Scan failed');
-    }
-
+    setRecentTransactions((prev) => [newTransaction, ...prev].slice(0, 6));
     await stopScanner();
   };
 
-  // بدء الماسح الضوئي
   const startScanner = async () => {
     setErrorMessage('');
     setScanMessage('Initializing camera...');
@@ -142,16 +106,25 @@ export default function QRStockScanner() {
     }
   };
 
-  // إيقاف الماسح
   const handleStop = async () => {
     await stopScanner();
     setScanMessage('Scanner stopped');
     setErrorMessage('');
   };
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
+    setUserRole(role);
+  }, []);
 
   return (
     <div className="app-layout">
-      <SlideBare activeLabel="QR Scanner" />
+      {userRole?.toLowerCase() === 'storekeeper' ? (
+        <Sidebare3 activeLabel="QR Scanner" />
+      ) : (
+        <Sidebare2 activeLabel="QR Scanner" />
+      )}
 
       <main className="app-main">
         <div className="page-shell">

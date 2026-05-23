@@ -76,7 +76,7 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/register/', dataToSend);
+      const response = await axios.post('http://localhost:8000/api/esi-gm/register/', dataToSend);
       console.log(response.data);
       setSuccess('Account created successfully');
       navigate('/login');
@@ -159,7 +159,11 @@ function Register() {
             </span>
           </div>
 
-          <h1 className={`text-2xl font-black mt-2 ${themeColors.textMain}`}>Create Account</h1>
+          <h1
+            className={`text-2xl font-black mt-2 flex flex-col items-center text-center ${themeColors.textMain}`}
+          >
+            Create Account
+          </h1>
 
           <p
             className={`font-inter font-normal text-sm leading-[30px] text-center ${themeColors.textSecondary}`}

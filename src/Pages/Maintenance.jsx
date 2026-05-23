@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { AlertCircle, Calendar, Wrench } from 'lucide-react';
 import ThemeToggel from '../components/ThemToggel.jsx';
 import Sidebare3 from '../components/Sidebare3.jsx';
+import Sidebare2 from '../components/Sidebare2';
 import { fetchMaintenance, fetchMaintenanceStats } from '../Api/maintenance.api.js';
 
 export default function Maintenance() {
@@ -54,9 +55,19 @@ export default function Maintenance() {
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
+    setUserRole(role);
+  }, []);
   return (
     <div className="flex dynamic-bg transition-colors duration-300" style={{ fontFamily: 'Inter' }}>
-      <Sidebare3 activeLabel="Maintenance" />
+      {userRole?.toLowerCase() === 'storekeeper' ? (
+        <Sidebare3 activeLabel="Maintenance" />
+      ) : (
+        <Sidebare2 activeLabel="Maintenance" />
+      )}
       <main className="flex-1 relative overflow-y-auto p-8">
         <div className="absolute top-6 right-8 z-60">
           <ThemeToggel />
