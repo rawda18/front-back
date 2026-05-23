@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import SlideBare from '../Components/SlideBare.jsx';
+import React, { useRef, useState, useEffect } from 'react';
+import Sidebare3 from '../Components/Sidebare3.jsx';
+import Sidebare2 from '../components/Sidebare2';
 import ThemeToggle from '../Components/ThemeToggle.jsx';
 import { Html5Qrcode } from 'html5-qrcode';
 import {
@@ -110,10 +111,20 @@ export default function QRStockScanner() {
     setScanMessage('Scanner stopped');
     setErrorMessage('');
   };
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
+    setUserRole(role);
+  }, []);
 
   return (
     <div className="app-layout">
-      <SlideBare activeLabel="QR Scanner" />
+      {userRole?.toLowerCase() === 'storekeeper' ? (
+        <Sidebare3 activeLabel="QR Scanner" />
+      ) : (
+        <Sidebare2 activeLabel="QR Scanner" />
+      )}
 
       <main className="app-main">
         <div className="page-shell">

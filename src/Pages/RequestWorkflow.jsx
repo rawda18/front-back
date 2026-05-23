@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getMaterialRequests } from '../Api/RequestApi.js';
 import { useNavigate } from 'react-router-dom';
+import Sidebare2 from '../Components/Sidebare2';
 import '../hook/RequestWorkflow.css';
 import {
   LayoutDashboard,
@@ -65,92 +66,7 @@ export default function MaterialRequests() {
     <div className={`request-workflow-container ${dark ? 'dark' : ''}`}>
       <div className="flex min-h-screen bg-[#F8FAFC] dark:bg-[#121825] text-gray-800 dark:text-gray-100 transition-colors">
         {/* Sidebar */}
-        <aside className="w-64 bg-white dark:bg-[#121825] border-r dark:border-[#1E293B] pt-2 p-4 flex flex-col">
-          <div
-            className={`flex items-center h-[97px] px-6 border-b ${dark ? 'border-[#2B4C9F]' : 'border-[#E2E8F0]'}`}
-          >
-            <div className="flex-shrink-0 w-[48px] h-[48px]">
-              <img
-                src={logo}
-                alt="Logo"
-                className="w-full h-full rounded-full bg-lightgray bg-center bg-cover bg-no-repeat"
-              />
-            </div>
-            <div className="ml-4">
-              <h1 className={`text-base font-bold ${dark ? 'text-[#E8EAF0]' : 'text-[#0F172A]'}`}>
-                ESI-GM
-              </h1>
-              <p className={`text-[10px] ${dark ? 'text-[#94A3B8]' : 'text-[#64748B]'}`}>
-                Lab Equipment
-              </p>
-            </div>
-          </div>
-          <nav className="space-y-2 text-gray-600 dark:text-gray-300">
-            {[
-              { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard/admin' },
-              { name: 'Inventory', icon: Boxes, path: '/inventory' },
-              { name: 'QR Scanner', icon: ScanLine, path: '/qr-scanner' },
-              { name: 'Users', icon: Users, path: '/users' },
-              { name: 'Requests', icon: ClipboardList, path: '/requests' },
-              { name: 'Material Outputs', icon: Package, path: '/material-outputs' },
-              { name: 'Maintenance', icon: Wrench, path: '/maintenance' },
-              { name: 'Settings', icon: Settings, path: '/settings' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  onClick={() => navigate(item.path)}
-                  key={item.name}
-                  className={`p-2 rounded-lg cursor-pointer flex items-center gap-2 ${
-                    item.name === 'Requests'
-                      ? 'bg-indigo-500 text-white shadow-md'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <Icon size={18} />
-                  <span>{item.name}</span>
-                </div>
-              );
-            })}
-          </nav>
-
-          <div className="border-t border-slate-100 dark:border-gray-700 pt-4">
-            <div className="mb-6 px-2">
-              <p className="text-base font-bold dark:text-white">Robotics Lab Admin</p>
-              <p className="text-sm text-slate-400 font-medium">Admin</p>
-            </div>
-
-            <button
-              onClick={() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                navigate('/login');
-              }}
-              className="w-full flex text-base bg-transparent items-center gap-3 px-2 py-3 text-slate-900 dark:text-gray-300 hover:text-red-600 transition-colors font-medium group"
-            >
-              <div className="rotate-180 group-hover:translate-x-1 transition-transform">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                  />
-                </svg>
-              </div>
-              Logout
-            </button>
-
-            <div className="mt-6 pt-6 border-t border-slate-100 dark:border-gray-700 flex justify-center">
-              <button
-                onClick={() => navigate(-1)}
-                className="text-slate-900 bg-transparent dark:text-gray-400 hover:rotate-90 transition-transform"
-              >
-                <X size={24} />
-              </button>
-            </div>
-          </div>
-        </aside>
+        <Sidebare2 activeLabel="Requests" />
 
         {/* Main Content */}
         <main className="flex-1 p-6 space-y-6">

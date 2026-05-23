@@ -125,13 +125,12 @@ const NewRequestModal = ({ isOpen, onClose, onAddRequest, dark }) => {
 
       try {
         const finalSubmission = {
-          projectId: 1, // أو خليها dynamic من liste des projets
+          projectName: formData.project, // ✅ خليها projectName مش projectId
           purpose: formData.purpose,
           startDate: formData.startDate,
           endDate: formData.endDate,
           items: materials.map((m) => ({
-            materialId: 1, // مؤقتاً، تحتاج تجيب id المادة من API
-            name: m.name,
+            name: m.name, // ✅ اسم المادة
             qty: m.qty,
           })),
         };

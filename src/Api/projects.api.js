@@ -1,13 +1,25 @@
-// src/Api/projects.api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8006/api';
+// ✅ غيري الرابط إلى 8000
+const API_BASE_URL = 'http://localhost:8001';
+
+// دالة لجلب الـ Token
+const getToken = () => {
+  return localStorage.getItem('access_token');
+};
 
 export const fetchProjects = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/projects/`);
+    const token = getToken();
+    // ✅ استعمل نفس endpoint تاع my-request
+    const response = await axios.get(`${API_BASE_URL}/my-request/projects/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     // تحويل البيانات من شكل API إلى شكل الـ Frontend
-    const projects = response.data.results.map((project) => ({
+    const projects = (response.data.results || response.data).map((project) => ({
       id: project.id,
       title: project.name,
       desc: project.description || 'No description',
@@ -23,12 +35,22 @@ export const fetchProjects = async () => {
 
 export const addProject = async (newProject) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/projects/`, {
-      name: newProject.title,
-      description: newProject.desc,
-    });
+    const token = getToken();
+    // ✅ نفس endpoint الصحيح
+    const response = await axios.post(
+      `${API_BASE_URL}/my-request/projects/`,
+      {
+        name: newProject.title,
+        description: newProject.desc,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    );
 
-    // تحويل الـ Response إلى شكل الـ Frontend
     return {
       id: response.data.id,
       title: response.data.name,
@@ -44,7 +66,12 @@ export const addProject = async (newProject) => {
 
 export const deleteProject = async (id) => {
   try {
-    await axios.delete(`${API_BASE_URL}/projects/${id}/`);
+    const token = getToken();
+    await axios.delete(`${API_BASE_URL}/my-request/projects/${id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return true;
   } catch (error) {
     console.error('Error deleting project:', error);

@@ -20,38 +20,53 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/login/', {
+      const response = await axios.post('http://localhost:8000/api/esi-gm/login/', {
         email: email,
         password: password,
       });
+      // بعد ما يدخل المستخدم بنجاح
 
       console.log('Login response:', response.data);
 
       // تخزين الـ tokens
       localStorage.setItem('access_token', response.data.tokens?.access);
       localStorage.setItem('refresh_token', response.data.tokens?.refresh);
+      localStorage.setItem('student_id', response.data.user?.id);
+      localStorage.setItem(
+        'user_name',
+        response.data.user.full_name || response.data.user.username,
+      );
+      localStorage.setItem('user_email', response.data.user.email);
+      // بعد ما يرجعلك response
+      // بعد ما يرجعلك response من login
+      const userEmail = response.data.user?.email || email;
+
+      let role = 'student';
+      if (userEmail === 's.keeper@esi-sba.dz') {
+        role = 'storekeeper';
+      } else if (userEmail === 'a.admin@esi-sba.dz') {
+        role = 'admin';
+      } else if (userEmail === 's.superadmin@esi-sba.dz') {
+        role = 'super_admin';
+      }
+
+      localStorage.setItem('user_role', role);
+      localStorage.setItem('access_token', response.data.tokens?.access);
+      localStorage.setItem('user_name', response.data.user?.username || 'User');
 
       // ✅ تحديد الـ role من is_superuser و is_staff
       const user = response.data.user;
-      let role = 'student';
 
-      if (user.is_superuser === true) {
-        role = 'super_admin';
-      } else if (user.is_staff === true) {
-        role = 'admin';
-      } else {
-        role = 'student';
-      }
-
-      localStorage.setItem('role', role);
       localStorage.setItem('user', JSON.stringify(user));
 
       // التوجيه حسب الـ role
-      if (role === 'super_admin') {
+      const role_us = localStorage.getItem('user_role');
+
+      if (role_us === 'super_admin') {
         navigate('/dashboard/superadmin');
-      } else if (role === 'admin') {
+      } else if (role_us === 'admin') {
         navigate('/dashboard/admin');
-      } else if (role === 'storekeeper') {
+      } else if (role_us === 'storekeeper') {
         navigate('/dashboard/storekeeper');
       } else {
         navigate('/dashboard/student');
