@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import SlideBare from '../Components/SlideBare.jsx';
 import ThemeToggle from '../Components/ThemeToggle.jsx';
 import { Html5Qrcode } from 'html5-qrcode';
@@ -11,6 +11,7 @@ import {
   History,
   X,
 } from 'lucide-react';
+import qrScannerAPI from '../Api/qrScanner.api.js';
 
 export default function QRStockScanner() {
   const scannerRef = useRef(null);
@@ -23,6 +24,25 @@ export default function QRStockScanner() {
   const [lastScannedCode, setLastScannedCode] = useState('');
   const [recentTransactions, setRecentTransactions] = useState([]);
 
+  // تحميل المعاملات السابقة عند تحميل الصفحة
+  useEffect(() => {
+    const loadData = async () => {
+      const result = await qrScannerAPI.getRecentTransactions(6);
+      if (result.success) {
+        const formattedTransactions = result.transactions.map(t => ({
+          id: t.id,
+          code: t.material_title || t.material,
+          type: t.transaction_type,
+          date: new Date(t.timestamp).toLocaleString(),
+          status: 'Success',
+        }));
+        setRecentTransactions(formattedTransactions);
+      }
+    };
+    loadData();
+  }, []);
+
+  // إيقاف الماسح الضوئي
   const stopScanner = async () => {
     try {
       if (scannerRef.current) {
@@ -37,23 +57,40 @@ export default function QRStockScanner() {
     }
   };
 
+  // معالجة نجاح المسح
   const handleScanSuccess = async (decodedText) => {
     setLastScannedCode(decodedText);
-    setScanMessage('QR code scanned successfully');
+    setScanMessage('Processing QR code...');
     setErrorMessage('');
 
-    const newTransaction = {
-      id: Date.now(),
-      code: decodedText,
-      type: transactionType,
-      date: new Date().toLocaleString(),
-      status: 'Success',
-    };
+    // استدعاء الـ API الحقيقي
+    const result = await qrScannerAPI.processScan(
+      decodedText,
+      transactionType,
+      1
+    );
 
-    setRecentTransactions((prev) => [newTransaction, ...prev].slice(0, 6));
+    if (result.success) {
+      setScanMessage(`✅ ${result.message}`);
+      
+      const newTransaction = {
+        id: result.transaction.id,
+        code: result.transaction.material_title || result.material?.title || decodedText,
+        type: transactionType,
+        date: new Date().toLocaleString(),
+        status: 'Success',
+      };
+
+      setRecentTransactions((prev) => [newTransaction, ...prev].slice(0, 6));
+    } else {
+      setErrorMessage(result.error);
+      setScanMessage('❌ Scan failed');
+    }
+
     await stopScanner();
   };
 
+  // بدء الماسح الضوئي
   const startScanner = async () => {
     setErrorMessage('');
     setScanMessage('Initializing camera...');
@@ -105,6 +142,7 @@ export default function QRStockScanner() {
     }
   };
 
+  // إيقاف الماسح
   const handleStop = async () => {
     await stopScanner();
     setScanMessage('Scanner stopped');
