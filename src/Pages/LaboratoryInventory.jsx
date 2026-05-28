@@ -21,6 +21,8 @@ import {
 import logo from './logo.jpg';
 import { getItems } from '../Api/inventory.api.js';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 const mockApi = {
   categories: [
@@ -100,7 +102,6 @@ const mockApi = {
 
 const LaboratoryInventory = () => {
   const navigate = useNavigate();
-  const [dark, setDark] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All Categories');
   const [statusFilter, setStatusFilter] = useState('All Status');
@@ -129,9 +130,9 @@ const LaboratoryInventory = () => {
 
     loadAllData();
   }, []);
-  const toggleTheme = () => setDark(!dark);
-  const [userRole, setUserRole] = useState('');
 
+  const [userRole, setUserRole] = useState('');
+  const { darkMode: dark } = useTheme();
   useEffect(() => {
     const role = localStorage.getItem('user_role') || localStorage.getItem('role') || 'admin';
     setUserRole(role);
@@ -170,19 +171,6 @@ const LaboratoryInventory = () => {
               Browse and search all available materials
             </p>
           </div>
-
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-xl border ${
-              dark ? 'bg-[#020817] border-[#2B4C9F]' : 'bg-white border-[#E2E8F0] hover:bg-gray-100'
-            }`}
-          >
-            {dark ? (
-              <Sun size={20} className="text-[#FFF]" />
-            ) : (
-              <Moon size={20} className="text-[#0F172A]" />
-            )}
-          </button>
         </header>
 
         <div

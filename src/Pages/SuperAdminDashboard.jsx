@@ -4,6 +4,8 @@ import { getLaboratories } from '../Api/LabsMana.api.js';
 import { useNavigate } from 'react-router-dom';
 import UserManagement from './UserManagement.jsx';
 import logo from './logo.jpg';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 import {
   LayoutDashboard,
   Users,
@@ -28,8 +30,7 @@ import {
 } from 'lucide-react';
 
 const SuperAdminDashboard = () => {
-  const [dark, setDark] = useState(false);
-  const toggleTheme = () => setDark(!dark);
+  const { darkMode: dark, toggleTheme } = useTheme();
   const [stats, setStats] = useState([]);
   const [labs, setLabs] = useState([]);
   const [loading, setLoading] = useState(true);

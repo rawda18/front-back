@@ -1,6 +1,8 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 import {
   X,
   Printer,

@@ -5,6 +5,8 @@ import Sidebare from '../components/Sidebare';
 import ValidationSlipPage from './ValidationSlipPage';
 import { getMyRequests } from '../Api/requests.api.js';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -22,7 +24,9 @@ import {
   Moon,
 } from 'lucide-react';
 
-const MyRequestsPage = ({ toggleTheme, dark }) => {
+const MyRequestsPage = () => {
+  const { darkMode: dark } = useTheme();
+
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isSlipOpen, setIsSlipOpen] = useState(false);
   const openSlip = (req) => {

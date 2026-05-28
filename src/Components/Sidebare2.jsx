@@ -15,25 +15,31 @@ import {
   Moon,
 } from 'lucide-react';
 import logo from '../Pages/logo.jpg';
+import ThemeToggle from './ThemToggel';
+import { useTheme } from '../Context/ThemeContext';
 
-const NavItem = ({ icon: Icon, label, active, dark, onClick }) => (
-  <div
-    onClick={onClick}
-    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl cursor-pointer transition-all ${
-      active
-        ? 'bg-[#2B4C9F] text-white shadow-md'
-        : dark
-          ? 'text-[#E8EAF0] hover:bg-gray-800'
-          : 'text-[#0F172A] hover:bg-gray-100'
-    }`}
-  >
-    <Icon size={20} />
-    <span className="text-sm font-medium">{label}</span>
-  </div>
-);
+const NavItem = ({ icon: Icon, label, active, onClick }) => {
+  const { darkMode: dark } = useTheme();
+  return (
+    <div
+      onClick={onClick}
+      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl cursor-pointer transition-all ${
+        active
+          ? 'bg-[#2B4C9F] text-white shadow-md'
+          : dark
+            ? 'text-[#E8EAF0] hover:bg-gray-800'
+            : 'text-[#0F172A] hover:bg-gray-100'
+      }`}
+    >
+      <Icon size={20} />
+      <span className="text-sm font-medium">{label}</span>
+    </div>
+  );
+};
 
-export default function Sidebare2({ activeLabel, dark, toggleTheme }) {
+export default function Sidebare2({ activeLabel }) {
   const navigate = useNavigate();
+  const { darkMode: dark, toggleTheme } = useTheme();
   const [userName, setUserName] = useState('Admin');
   const [userRole, setUserRole] = useState('Administrator');
 
@@ -75,56 +81,48 @@ export default function Sidebare2({ activeLabel, dark, toggleTheme }) {
           icon={LayoutDashboard}
           label="Dashboard"
           active={activeLabel === 'Dashboard'}
-          dark={dark}
           onClick={() => navigate('/dashboard/admin')}
         />
         <NavItem
           icon={Box}
           label="Inventory"
           active={activeLabel === 'Inventory'}
-          dark={dark}
           onClick={() => navigate('/inventory')}
         />
         <NavItem
           icon={QrCode}
           label="QR Scanner"
           active={activeLabel === 'QR Scanner'}
-          dark={dark}
           onClick={() => navigate('/qr-scanner')}
         />
         <NavItem
           icon={Users}
           label="Users"
           active={activeLabel === 'Users'}
-          dark={dark}
           onClick={() => navigate('/users')}
         />
         <NavItem
           icon={ClipboardList}
           label="Requests"
           active={activeLabel === 'Requests'}
-          dark={dark}
           onClick={() => navigate('/requests')}
         />
         <NavItem
           icon={ArrowUpRight}
           label="Material Outputs"
           active={activeLabel === 'Material Outputs'}
-          dark={dark}
           onClick={() => navigate('/material-outputs')}
         />
         <NavItem
           icon={Wrench}
           label="Maintenance"
           active={activeLabel === 'Maintenance'}
-          dark={dark}
           onClick={() => navigate('/maintenance')}
         />
         <NavItem
           icon={Settings}
           label="Settings"
           active={activeLabel === 'Settings'}
-          dark={dark}
           onClick={() => navigate('/settings')}
         />
       </nav>

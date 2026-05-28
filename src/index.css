@@ -7,8 +7,6 @@
   font-weight: 400;
   /* line-height: 1.5;
 
-  font-weight: 400;
-
 
 
   color-scheme: light dark;
@@ -81,4 +79,20 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+/* هذا الكود سيجبر المتصفح على إظهار النص */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* 1. جعل الخلفية شفافة عبر خدعة الترانزيشن */
+  transition: background-color 5000s ease-in-out 0s;
+
+  /* 2. إجبار لون النص على الظهور (استعمل لون ثابت للتجربة) */
+  -webkit-text-fill-color: #e8eaf0 !important; /* هذا للـ Dark Mode */
+}
+
+/* إذا كنت في الـ Light Mode لازم تبدلو */
+[data-theme='light'] input:-webkit-autofill {
+  -webkit-text-fill-color: #0f172a !important;
 }

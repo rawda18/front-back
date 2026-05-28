@@ -1,5 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddLaboratory from './AddLaboratory';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 import {
   Moon,
   Sun,
@@ -25,7 +28,15 @@ import logo from './logo.jpg';
 
 import { getLaboratories } from '../Api/LabsMana.api.js';
 const LaboratoryManagementPage = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { isDarkMode: darkMode, toggleTheme } = useTheme();
+
+  // ✅ نضيفو state للمودال
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // ✅ دالة لإضافة المختبر الجديد
+  const handleAddLaboratory = (newLab) => {
+    setLaboratories((prev) => [newLab, ...prev]);
+  };
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState('All');
   const [laboratories, setLaboratories] = useState([]);
@@ -157,12 +168,7 @@ const LaboratoryManagementPage = () => {
 
         <main className="flex-1">
           <header className="h-20 px-8 flex items-center justify-end border-b border-slate-200/60 dark:border-slate-800">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-white hover:shadow transition"
-            >
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+            <ThemeToggle />
           </header>
 
           <div className="p-4 sm:p-6 lg:p-8">
@@ -174,7 +180,10 @@ const LaboratoryManagementPage = () => {
                 </p>
               </div>
 
-              <button className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-semibold shadow-sm transition">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-semibold shadow-sm transition"
+              >
                 <Plus size={18} />
                 Add Laboratory
               </button>
@@ -348,6 +357,12 @@ const LaboratoryManagementPage = () => {
           </div>
         </main>
       </div>
+
+      <AddLaboratory
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAdd={handleAddLaboratory}
+      />
     </div>
   );
 };

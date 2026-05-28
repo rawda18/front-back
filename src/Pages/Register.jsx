@@ -3,8 +3,11 @@ import axios from 'axios';
 import { Sun, Moon, User, Mail, Lock, UserCircle, ChevronDown } from 'lucide-react';
 import logoEsi from './logo.jpg';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../Context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 function Register() {
+  const { darkMode: isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -20,9 +23,6 @@ function Register() {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -101,12 +101,9 @@ function Register() {
   };
   const themeColors = {
     bg: isDarkMode
-      ? {
-          background: 'linear-gradient(180deg,#020817 0%,#1E293B 50%,#020817 100%)',
-        }
-      : {
-          background: 'linear-gradient(180deg,#F8FAFC 0%,#F1F5F9 50%,#F8FAFC 100%)',
-        },
+      ? 'bg-gradient-to-b from-[#020817] via-[#1E293B] to-[#020817]'
+      : 'bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#F8FAFC]',
+
     textMain: isDarkMode ? 'text-[#E8EAF0]' : 'text-[#0F172A]',
     textSecondary: isDarkMode ? 'text-[#94A3B8]' : 'text-[#64748B]',
     cardBg: isDarkMode ? 'bg-[#0A1128]' : 'bg-white',
@@ -125,21 +122,11 @@ function Register() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div
-      style={themeColors.bg}
-      className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden"
+      className={`min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden ${themeColors.bg}`}
     >
-      <button
-        className={`absolute top-6 right-6 w-10 h-10 rounded-xl border flex items-center justify-center transition-all box-border focus:outline-none focus:ring-0 ${themeColors.buttonTheme} ${themeColors.cardBorder}`}
-        onClick={toggleTheme}
-      >
-        <div>
-          {isDarkMode ? (
-            <Moon size={20} className="w-5 h-5" />
-          ) : (
-            <Sun size={20} className="w-5 h-5" />
-          )}
-        </div>
-      </button>
+      <div className="absolute top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
 
       <div className="flex flex-col items-center gap-4 w-full max-w-[450px] max-h-full py-4">
         <div className="w-full max-w-[448px]">
@@ -229,12 +216,23 @@ ${themeColors.cardBg} border ${themeColors.cardBorder}`}
                 <Mail className="text-gray-400" size={20} />{' '}
                 <input
                   autoComplete="off"
-                  className={`flex-1 ml-2 bg-transparent text-sm outline-none ${themeColors.textColor} border-none ${themeColors.inputBg}`}
+                  className={`flex-1 tranparent ml-2 outline-none ${themeColors.textColor} border-none text-sm ${themeColors.inputBg} autofill:shadow-[inset_0_0_0px_1000px_transparent]`}
                   type="email"
                   name="email"
                   placeholder="a.student@esi-sba.dz"
                   value={formData.email}
                   onChange={handleChange}
+                  style={{
+                    // إذا كان دارك مود نديرو خلفية غامقة، وإذا لا نديرو فاتحة (أو شفافة)
+                    WebkitBoxShadow: isDarkMode
+                      ? '0 0 0 1000px #020817 inset'
+                      : '0 0 0 1000px #F8FAFC inset',
+
+                    // لون النص يتبدل حسب المود
+                    WebkitTextFillColor: isDarkMode ? '#E8EAF0' : '#0F172A',
+
+                    caretColor: isDarkMode ? 'white' : 'black',
+                  }}
                 />{' '}
               </div>{' '}
               <p className="text-[#64748B] font-inter text-xs font-normal leading-4 text-left">
@@ -259,11 +257,22 @@ ${themeColors.cardBg} border ${themeColors.cardBorder}`}
                 <Lock className="text-gray-400" size={20} />
 
                 <input
-                  className={`flex-1 ml-2 bg-transparent outline-none ${themeColors.textColor} text-sm border-none ${themeColors.inputBg}`}
+                  className={`flex-1 tranparent ml-2 outline-none ${themeColors.textColor} border-none text-sm ${themeColors.inputBg} autofill:shadow-[inset_0_0_0px_1000px_transparent]`}
                   type="password"
                   name="password"
                   placeholder="Create a password"
                   value={formData.password}
+                  style={{
+                    // إذا كان دارك مود نديرو خلفية غامقة، وإذا لا نديرو فاتحة (أو شفافة)
+                    WebkitBoxShadow: isDarkMode
+                      ? '0 0 0 1000px #020817 inset'
+                      : '0 0 0 1000px #F8FAFC inset',
+
+                    // لون النص يتبدل حسب المود
+                    WebkitTextFillColor: isDarkMode ? '#E8EAF0' : '#0F172A',
+
+                    caretColor: isDarkMode ? 'white' : 'black',
+                  }}
                   onChange={handleChange}
                 />
               </div>
